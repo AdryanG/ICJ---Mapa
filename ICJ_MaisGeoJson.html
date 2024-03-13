@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camada do Mapa</title>
+    <link rel="stylesheet" href="Leaflet/leaflet.css">
+</head>
+<style>
+    #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+    }
+</style>
+
+<body>
+    <div id="map"></div>
+</body>
+
+</html>
+
+<script src="Leaflet/leaflet.js"></script>
+<script src="Data\linha.js"></script>
+<script src="Data\poligono.js"></script>
+<script src="Data\pontos.js"></script>
+<script>
+    var map = L.map('map').setView([0, 0], 1);
+
+    var osm = L.tileLayer('https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=0xLQbt4WJeeuwW3p39Hy', {
+        attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>',
+        crossOrigin: true
+    }).addTo(map);
+
+    var LeafletIcon = L.Icon.extend({
+        options: {
+            shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+            iconSize: [38, 95],
+            shadowSize: [50, 64],
+            iconAnchor: [22, 94],
+            shadowAnchor: [4, 64],
+            popupAnchor: [-3, -76]
+        }
+    })
+
+    var greenIcon = new LeafletIcon({ iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png' });
+    var redIcon = new LeafletIcon({ iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png' });
+    var orangeIcon = new LeafletIcon({ iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-orange.png' });
+
+    // Adicionando marcadores
+    L.marker([51.5, -0.08], { icon: greenIcon }).addTo(map).bindPopup("<b>Eae Carinha1 </b> <br> Eu sou um Marcador").openPopup();
+    L.marker([51.5, -0.09], { icon: redIcon }).addTo(map).bindPopup("<b>Eae Carinha2 </b> <br> Eu sou um Marcador").openPopup();
+    L.marker([51.5, -0.10], { icon: orangeIcon }).addTo(map).bindPopup("<b>Eae Carinha3 </b> <br> Eu sou um Marcador").openPopup();
+
+    var circle = L.circle([51.508, -0.11], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.5,
+        radius: 1500
+    }).addTo(map);
+
+    var polygon = L.polygon([
+        [51.509, -0.08],
+        [51.503, -0.06],
+        [51.51, -0.047]
+    ]).addTo(map);
+
+    //Escala
+    L.control.scale({
+        metric: true,
+        imperial: false,
+        position: 'topright'
+    }).addTo(map);
+
+    //Marca d'agua
+    L.Control.Watermark = L.Control.extend({
+        onAdd: function (map) {
+            var img = L.DomUtil.create('img');
+            img.src = 'logo.png';
+            img.style.width = '75px';
+            return img;
+        },
+        onRemove: function (map) { }
+    });
+
+    L.control.watermark = function (opts) {
+        return new L.Control.Watermark(opts);
+    }
+
+    L.control.watermark({ position: 'bottomleft' }).addTo(map);
+
+    // Camadas do Google Maps
+    var googleStreets = L.tileLayer('http://{s}.google.com/vt?lyrs=m&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    });
+
+    var googleHybrid = L.tileLayer('http://{s}.google.com/vt?lyrs=s,h&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    });
+
+    var googleSat = L.tileLayer('http://{s}.google.com/vt?lyrs=s&x={x}&y={y}&z={z}', {
+        maxZoom: 20,
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
+    });
+
+    //Mais GEOJSON
+
+    var linhaData = L.geoJSON(linhaJSON).addTo(map);
+    var poligonoData = L.geoJSON(poligonoJSON, {
+        onEachFeature: function (feature, layer) {
+            layer.bindPopup('<b>Isso é um </b>' + feature.properties.name);
+        },
+        style: {
+            fillColor: 'red',
+            fillOpacity: 0.1,
+            color: 'yellow',
+        }
+    }).addTo(map);
+
+    var pontoData = L.geoJSON(pontosJSON).addTo(map);
+
+    // Controles de camada
+    var baseLayers = {
+        "OpenStreetMap": osm,
+        "Satellite": googleSat,
+        "Google Map": googleStreets,
+    };
+
+    var overlays = {
+        "Marcador - 1": L.marker([51.5, -0.08], { icon: greenIcon }),
+        "Marcador - 2": L.marker([51.5, -0.09], { icon: redIcon }),
+        "Marcador - 3": L.marker([51.5, -0.10], { icon: orangeIcon }),
+        "Circulo": circle,
+        "Poligono": polygon,
+        "Poligonos - JS": poligonoData,
+        "Pontos - JS": pontoData,
+        "Linha - JS": linhaData,
+    };
+
+    L.control.layers(baseLayers, overlays).addTo(map);
+
+
+</script>

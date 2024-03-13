@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camada do Mapa</title>
+    <link rel="stylesheet" href="Leaflet\leaflet.css">
+    <link rel="stylesheet" href="./dist/MarkerCluster.css">
+    <link rel="stylesheet" href="./dist/MarkerCluster.Default.css">
+</head>
+<style>
+    #map{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+</style>
+<body>
+    <div id="map"></div>
+</body>
+</html>
+<script src="Leaflet\leaflet.js"></script>
+
+<script src="Data\data.js"></script>
+<script src="./dist/leaflet.markercluster.js"></script>
+
+<script>
+    var map = L.map('map').setView([0, 0], 1);
+
+L.tileLayer('https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=0xLQbt4WJeeuwW3p39Hy', {
+    attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'
+}).addTo(map);
+
+const geojsonmarkerOptions = {
+    radius: 8,
+    fillcolor: "#ff7800",
+    color: "#111",
+    weight: 1,
+    opacity: 1,
+    fillOpacity: 0.8
+};
+
+const  markers = L.markerClusterGroup();
+L.geoJSON(data, {
+    pointToLayer: function (feature, latlgn){
+        return markers.addLayer(L.circleMarker(latlgn, geojsonmarkerOptions)) 
+    }
+}).addTo(map);
+
+
+map.addLayer(markers);
+
+</script>

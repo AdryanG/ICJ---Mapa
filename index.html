@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplos de Map</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .pric {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .basic-code {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Exemplos de Mapas</h1>
+        <div class="pric">
+            <h2>Como criar um mapa e marcadores nele:</h2>
+            <p>Em um arquivo html,com a biblioteca Leaflet já adicionada, você deve abrir um script e nele colocar: </p>
+            <pre class="basic-code" style="color: black;">
+                <span style="color: rgb(255, 85, 0);">var</span> <span style="color: rgb(0, 38, 255)";> map</span>  = L.map(<span style="color: rgb(255, 85, 0);">'map'</span>).setView([0, 0], 1);
+            
+                L.tileLayer(<span style="color: rgb(255, 85, 0);">'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=0xLQbt4WJeeuwW3p39Hy'</span>, {
+                attribution: <span style="color: rgb(255, 85, 0);">'<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a
+                    href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>'</span>
+                }).addTo(map);
+                <span style="color: rgb(255, 85, 0);">var</span> <span style="color: rgb(0, 38, 255)";> marker</span> = L.marker([51.5, -0.09]).addTo(map);
+            </pre>
+
+            </p>
+            <p><a href="ICJ_LayerMapEMarcador.html"><button class="btn btn-primary">Ver Exemplo</button></a></p>
+
+        </div>
+
+
+        <div class="pric">
+            <h2>Como adicionar marcações como circulos e triângulos ao meu mapa?</h2>
+            <p>No arquivo com um mapa, voce pode colocar os seguintes poligonos </p>
+            <pre class="basic-code" style="color: black;">
+                <span style="color: rgb(255, 85, 0);">var</span> <span style="color: blue;">circle </span> = L.circle([51.508, -0.11], {
+                    <span style="color: rgb(255, 85, 0);">color:</span> 'red',
+                    <span style="color: rgb(255, 85, 0);">fillColor:</span> '#f03',
+                    <span style="color: rgb(255, 85, 0);">fillOpacity:</span> 0.5,
+                    <span style="color: rgb(255, 85, 0);">radius:</span> 1500
+                }).addTo(map);
+            
+                <span style="color: rgb(255, 85, 0);">var</span> <span style="color: blue;">polygon </span> = L.polygon([
+                    [51.509, -0.08],
+                    [51.503, -0.06],
+                    [51.51, -0.047]
+                ]).addTo(map);
+            </pre>
+
+            </p>
+            <p><a href="ICJ_MarcacaoPoligonos.html"><button class="btn btn-primary">Ver Exemplo</button></a></p>
+
+        </div>
+
+        <div class="pric">
+            <h2>Como mudar os icones dos marcadores? e como colocar sombras neles?</h2>
+            <p>No arquivo com um mapa e com marcadores, voce pode fazer as seguintes alterações </p>
+            <pre class="basic-code" style="color: black;">
+                 <span style="color: rgb(255, 85, 0);">var</span> <span style="color: blue;">leafletIcon </span>= L.icon ({
+                    iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
+                    shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+                    iconSize: [38,95],
+                    iconAnchor: [22,94],
+                    shadowAnchor: [4,62],
+                    popupAnchor: [12, -98]
+                });
+            </pre>
+            </p>
+            <p><a href="ICJ_MudancaIconeSombra.html"><button class="btn btn-primary">Ver Exemplo</button></a></p>
+        </div>
+
+
+        <div class="pric">
+            <h2>Como utilizar outros estilos de Mapas?</h2>
+            <p> Para começar, você pode encontrar outros provedores de mapas no site Leaflet Providers Preview. Uma vez
+                escolhido o provedor de mapas desejado, copie o código fornecido pelo provedor e cole-o em seu projeto.
+            </p>
+            <pre class="basic-code" style="color: black;">
+                 <span style="color: rgb(255, 85, 0);">var</span> <span style="color: blue;">OpenStreetMap_HOT </span>= L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Tiles style by <a href="https://www.hotosm.org/" target="_blank">Humanitarian OpenStreetMap Team</a> hosted by <a href="https://openstreetmap.fr/" target="_blank">OpenStreetMap France</a>'
+                }).addTo(map);
+                
+                
+            </pre>
+            </p>
+            <p><a href="ICJ_OutrasLayers.html"><button class="btn btn-primary">Ver Exemplo</button></a></p>
+
+        </div>
+        <div class="pric">
+            <h2>Como colocar escala? Ou como colocar Marca D'agua</h2>
+            <p>Para adicionar a escala e uma marca d'água ao seu mapa, siga estas etapas simples:</p>
+            <pre class="basic-code" style="color: black;">
+                <span style="color: orange;">var</span> L.control.scale({
+                    metric: true,
+                    imperial: false,
+                    position: 'topright'
+                }).addTo(map);
+                
+                <span style="color: orange;">L.Control.Watermark</span> = L.Control.extend({
+                    onAdd: function(map) {
+                        var img = L.DomUtil.create('img');
+                        img.src = 'logo.png';
+                        img.style.width = '75px';
+                        return img;
+                    },
+                    onRemove: function(map) {}
+                });
+                
+                <span style="color: orange;">L.control.watermark</span> = function(opts) {
+                    return new L.Control.Watermark(opts);
+                }
+                
+                <span style="color: orange;">L.control.watermark</span>({ position: 'bottomleft' }).addTo(map);
+                  
+            </pre>
+            </p>
+            <p><a href="ICJ_EscalaMarcaDagua.html"><button class="btn btn-primary">Ver Exemplo</button></a></p>
+
+        </div>
+        <div class="pric">
+            <h2>Como trocar de layers?Como fazer com que um marcador suma quando eu quero?</h2>
+            <p>Abaixo, você pode observar que, ao lidar com várias camadas de mapa, é possível criar um controle de
+                camadas para alterá-las
+                simultaneamente. Isso permite que os usuários alternem entre diferentes estilos de mapa de forma
+                conveniente.
+            </p>
+            <pre class="basic-code" style="color: black;">
+                <span style="color: orange;">var</span> <span style="color: blue;">baseLayers</span> = {
+                    "<span style="color: blue;">OpenStreetMap</span>": osm,
+                    "<span style="color: blue;">Stadia Dark</span>": Stadia_AlidadeSmoothDark,
+                };
+                
+                <span style="color: orange;">var</span> <span style="color: blue;">overlays</span> = {
+                    "<span style="color: blue;">Marker - 1</span>": L.marker([51.5, -0.08], { icon: greenIcon }),
+                    "<span style="color: blue;">Marker - 2</span>": L.marker([51.5, -0.09], { icon: redIcon }),
+                    "<span style="color: blue;">Marker - 3</span>": L.marker([51.5, -0.10], { icon: orangeIcon }),
+                    "<span style="color: blue;">Circulo</span>": circle,
+                    "<span style="color: blue;">Poligono</span>": polygon
+                };
+                
+            </pre>
+            </p>
+            <p><a href="ICJ_LayerControl.html"><button class="btn btn-primary">Ver Exemplo</button></a></p>
+
+        </div>
+        <div class="pric">
+            <h2>Como colocar GeoJSON em meu mapa?</h2>
+            <p>Voce pode importar poligonos e marcacoes de Json, atraves do GeoJson.io, podendo criar arquivos em JS e
+                geoJson,para colocar em seu mapa.
+            </p>
+            <pre class="basic-code" style="color: black;">
+                < script src="Data\linha.js"></script>  /Para colocar um arquivo js ou geojson, voce deve importa-los antes
+                < script src="Data\poligono.js"></script>
+                < script src="Data\pontos.js"></script>
+                <span style="color: orange;">var</span> <span style="color: blue;">linhaData</span> = L.geoJSON(linhaJSON).addTo(map);
+
+                <span style="color: orange;">var</span> <span style="color: blue;">poligonoData</span> = L.geoJSON(poligonoJSON, {
+                onEachFeature: function (feature, layer) {
+                layer.bindPopup('<b>Isso é um </b>' + feature.properties.name);
+                },
+                style: {
+                    fillColor: 'red',
+                    fillOpacity: 0.1,
+                    color: 'yellow',
+                }
+                }).addTo(map);
+
+                <span style="color: orange;">var</span> <span style="color: blue;">pontoData</span> = L.geoJSON(pontosJSON).addTo(map);
+            </pre>
+            </p>
+            <p><a href="ICJ_MaisGeoJson.html"><button class="btn btn-primary">Ver Exemplo</button></a></p>
+
+        </div>
+
+        <div class="pric">
+            <h2>Como colocar a barra de pesquisa?</h2>
+            <p>Para colocar a barra de pesquisa é simples, apenas um passo é necessitado:</p>
+            <pre class="basic-code" style="color: black;">
+                L.Control.geocoder().addTo(map);
+            </pre>
+            </p>
+            <p><a href="ICJ_BarraPesquias.html"><button class="btn btn-primary">Ver Exemplo</button></a></p>
+
+        </div>
+
+        <div class="pric">
+            <h2>Como colocar um marcador que engloba outros marcadores e me mostra quantos tem em determinada regiâo
+            </h2>
+            <p> Para realizar este feito, voce deve baixar a pasta de MarkerCluster disponibilizada neste link: '<a href="https://github.com/Leaflet/Leaflet.markercluster">https://github.com/Leaflet/Leaflet.markercluster</a>'
+                apos baixar, voce pega a pasta dist e coloque em sua pasta do projeto, importando em seu projeto os scripts e links 
+                necessários para o funcionamento(Este agrupamento de marcadores é comumento é usado quando há muito marcadores devido a algum arquivo sendo json ou csv, está sendo utilizado
+                uma importação de um arquivo json para criar estes marcadores, algo que já foi ensinado acima). Após disto terá que ser feito as seguintes comandas:
+            </p>
+            <pre class="basic-code" style="color: black;">
+                < link rel="stylesheet" href="./dist/MarkerCluster.css">   /Importações
+                < link rel="stylesheet" href="./dist/MarkerCluster.Default.css"> /Importações
+                < script src="Data\data.js"></script> /Importações
+                < script src="./dist/leaflet.markercluster.js"></script> /Importações
+
+                <span style="color: orange;">const</span> geojsonmarkerOptions = {
+                    radius: 8,
+                    fillcolor: "#ff7800",
+                    color: "#000",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                };
+                
+                <span style="color: orange;">const</span> <span style="color: blue;">markers</span> = L.markerClusterGroup();
+                L.geoJSON(data, {
+                    pointToLayer: function (feature, latlgn) {
+                        <span style="color: orange;">return</span> markers.addLayer(L.circleMarker(latlgn, geojsonmarkerOptions));
+                    }
+                }).addTo(map);
+                
+                map.addLayer(markers);
+            </pre>
+            </p>
+            <p><a href="ICJ_MarkerCluster.html"><button class="btn btn-primary">Ver Exemplo</button></a></p>
+
+        </div>
+        <!-- <div class="pric">
+            <h2>Como mudar os icones dos marcadores? e como colocar sombras neles??</h2>
+            <p>No arquivo com um mapa e com marcadores, voce pode fazer as seguintes alterações </p>
+            <pre class="basic-code" style="color: black;">
+                var leafletIcon = L.icon ({
+                    iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-green.png',
+                    shadowUrl: 'https://leafletjs.com/examples/custom-icons/leaf-shadow.png',
+                    iconSize: [38,95],
+                    iconAnchor: [22,94],
+                    shadowAnchor: [4,62],
+                    popupAnchor: [12, -98]
+                
+                })
+            </pre>
+            </p>
+            <p><a href="ICJ_MudancaIconeSombra.html"><button class="btn btn-primary">Ver Exemplo</button></a></p>
+
+        </div> -->
+
+    </div>
+</body>
+
+</html>

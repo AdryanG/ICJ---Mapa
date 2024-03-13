@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camada do Mapa</title>
+    <link rel="stylesheet" href="Leaflet/leaflet.css">
+    <style>
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+
+    <script src="Leaflet/leaflet.js"></script>
+    <script src="Data/datacsv.csv"></script>
+    <script>
+        var map = L.map('map', {
+            center: [41.57, -72.69], // Latitude e longitude padrão no início
+            zoom: 3, // Entre 1 e 18; diminua para afastar, aumente para aproximar
+        });
+
+        var osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Função para carregar dados CSV
+        function loadCSV(url, callback) {
+            fetch(url)
+                .then(response => response.text())
+                .then(text => {
+                    // Converter o CSV para um array de objetos JavaScript
+                    const data = text.split('\n').slice(1).map(line => {
+                        const [Country, Name, lat, lng, Altitude] = line.split('|');
+                        return { Country, Name, lat: parseFloat(lat), lng: parseFloat(lng), Altitude: parseFloat(Altitude) };
+                    });
+                    callback(data);
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar o CSV:', error);
+                });
+        }
+
+        // Função para adicionar marcadores ao mapa
+        function addMarkers(data) {
+            data.forEach(row => {
+                L.marker([row.lat, row.lng], {
+                    opacity: 1,
+                }).bindPopup(row.Name).addTo(map);
+            });
+        }
+
+        // Carregar dados CSV e adicionar marcadores
+        loadCSV('Data/datacsv.csv', addMarkers);
+    </script>
+</body>
+
+</html>
